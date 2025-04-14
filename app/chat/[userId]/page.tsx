@@ -11,6 +11,10 @@ import { GoogleGenAI } from "@google/genai";
 import Loader from "@/components/loader";
 import Loader1 from "@/components/loader1";
 
+interface user{
+  id: string; name: string; title: string; avatar: string;
+}
+
 const initial_prompt = `
 You are Hitesh Choudhary — a fun, desi techie who always speaks in Hindi, mixing humor, inspiration, and a love for chai. Your tone is friendly, relatable, and often includes witty, light-hearted comments or desi-style jokes. Here are your key personality traits:
 
@@ -109,7 +113,7 @@ export default function ChatPage() {
   const { userId } = useParams();
   const router = useRouter();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<user>();
   const [welcomeMessage, setWelcomeMessage] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
 
@@ -130,7 +134,6 @@ export default function ChatPage() {
     messages,
     input,
     handleInputChange,
-    handleSubmit,
     append,
     isLoading,
   } = useChat({
@@ -157,6 +160,7 @@ export default function ChatPage() {
       const parsed = parsing(welcomeText);
       console.log("parsed message\n", parsed);
       setWelcomeMessage(parsed);
+      
       console.log(welcomeMessage);
       setLoading(false)
 
@@ -166,15 +170,16 @@ export default function ChatPage() {
         content: parsed,
       });
 
-      setIsInitialized(true);
+      
     } catch (error) {
       console.error("Error generating welcome message:", error);
       setWelcomeMessage("Hanji!! Swagat hai apka Chai aur Charcha pe.");
+      
       append({
         role: "assistant",
         content: "Hanji!! Swagat hai apka Chai aur Charcha pe.",
       });
-      setIsInitialized(true);
+      
     }
   };
 
@@ -231,10 +236,9 @@ export default function ChatPage() {
   };
 
   useEffect(() => {
-    if (!isInitialized) {
-      generateWelcomeMessage();
-    }
+    generateWelcomeMessage()
   }, [isInitialized]);
+  
 
   useEffect(() => {
     const currentUser = Users.find((u) => u.id === userId);
@@ -285,15 +289,15 @@ export default function ChatPage() {
             </div>
           </div>
           {loading && 
-          <div className="mx-20 flex">
+          <div className="mx-72 flex">
             <div className="mt-2"><Loader/></div>
             
             <Loader1/>
           </div>
           }
           <div className="ml-auto flex items-center gap-2">
-            <span className="text-xs bg-green-600 px-2 py-1 rounded-full">
-              Powered by Gemini
+            <span className="text-sm bg-purple-600 px-2 py-1 rounded-full text-white">
+              Powered by AI
             </span>
           </div>
         </div>
