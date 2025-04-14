@@ -115,8 +115,8 @@ export default function ChatPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [user, setUser] = useState<user>();
   const [welcomeMessage, setWelcomeMessage] = useState("");
-  const [isInitialized, setIsInitialized] = useState(false);
-
+  // const [isInitialized, setIsInitialized] = useState(false);
+  
   const parsing = (text: string) => {
     // Replace all asterisks with a space
     const cleaned = text.replace(/\*/g, " ");
@@ -237,7 +237,7 @@ export default function ChatPage() {
 
   useEffect(() => {
     generateWelcomeMessage()
-  }, [isInitialized]);
+  }, [router]);
   
 
   useEffect(() => {
