@@ -90,14 +90,7 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="flex mt-5">
-          <Button
-            onClick={() => hanldechat("3")}
-            className="cursor-pointer mt-5 w-[150px] mx-auto bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transition-all duration-300"
-          >
-            Chat with Both
-          </Button>
-        </div>
+        
       </section>
     </div>
   );
